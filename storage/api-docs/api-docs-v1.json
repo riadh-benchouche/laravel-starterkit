@@ -1,0 +1,67 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "WSN Api Documentation",
+        "description": "List and description of methods and models",
+        "contact": {
+            "email": "dev@fstck.co"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/users": {
+            "get": {
+                "summary": "Get logged-in users details",
+                "operationId": "566aed8efb436ca506e0ef51a032ecd9",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create a new user",
+                "operationId": "be551c1d694a01c164966f58bfa77013",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "/oauth/authorize",
+                        "tokenUrl": "/oauth/token",
+                        "refreshUrl": "/token/refresh",
+                        "scopes": []
+                    }
+                }
+            },
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token get with getToken method in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
