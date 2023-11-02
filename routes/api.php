@@ -20,6 +20,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => ['auth:sanctum']], static function () {
+    Route::post('logout', [AuthController::class, 'logout']);
     //users
     Route::apiResource('users', UserController::class)->except(['update']);
     Route::put('users/{user}/profile', [UserController::class, 'updateProfile']);

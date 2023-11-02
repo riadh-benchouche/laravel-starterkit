@@ -44,12 +44,14 @@ class UserController extends ApiController
     public function updateProfile(ProfileRequest $request, User $user): UserProfileResource
     {
         $this->profileRepository->updateProfile($user->profile->id, $request->validated());
-        return new UserProfileResource($user);
+        return new UserProfileResource($user->refresh());
     }
 
     public function updateAccount(UpdateAccountRequest $request, User $user): JsonResponse
     {
         $user->update($request->validated());
+        if ($request->has('role'))
+            $user->syncRoles($request->role);
         return $this->showMessage(__("Your password has been update successful"));
     }
 

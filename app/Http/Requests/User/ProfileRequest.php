@@ -16,7 +16,7 @@ class ProfileRequest extends FormRequest
         return [
             'first_name' => "required|string|min:3",
             'last_name' => "required|string|min:3",
-            'phone_number' => ['nullable', "unique:profiles,phone_number,{$this->user()->profile->id}"],
+            'phone_number' => ['nullable', "unique:profiles,phone_number,{$this->user->profile->id}"],
             'address' => ['nullable', 'string'],
             'gender' => ['nullable', new Enum(UserGenders::class)],
             'dob' => ['nullable', 'date'],

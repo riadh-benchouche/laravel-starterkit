@@ -16,13 +16,16 @@ class UserRepository
         return DB::transaction(static function () use ($data) {
             return User::withoutEvents(static function () use ($data) {
                 $user = User::create([
-                    'email' => $data['email'] ?? null,
+                    'email' => $data['email'],
                     'password' => $data['password'],
                 ]);
                 $user->profile()->create([
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'gender' => $data['gender'] ?? null,
+                    'dob' => $data['dob'] ?? null,
+                    'phone_number' => $data['phone_number'] ?? null,
+                    'address' => $data['address'] ?? null,
                 ]);
                 $user->assignRole($data['role']);
                 return $user;
