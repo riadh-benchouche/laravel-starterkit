@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Status;
+use App\Traits\SearchableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,7 +30,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, LogsActivity;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, LogsActivity, SearchableTrait;
 
     /**
      * @OA\Property(
@@ -94,6 +95,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $searchable = [
+        'columns' => [
+            'users.email' => 10,
+            'profiles.full_name' => 9,
+            'profiles.address' => 8,
+        ],
+        'joins' => [
+            'profiles' => ['users.id', 'profiles.user_id'],
+        ],
     ];
 
     /**

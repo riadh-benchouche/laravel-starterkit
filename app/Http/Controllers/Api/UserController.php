@@ -26,10 +26,15 @@ class UserController extends ApiController
         $this->userRepository = $userRepository;
         $this->profileRepository = $profileRepository;
     }
-    public function index(Request $request): AnonymousResourceCollection
+
+    public function index(Request $request, User $user): AnonymousResourceCollection
     {
-        return UserProfileResource::collection(User::paginate($request->get('limit', 10)));
+        if ($request->has('search')) {
+            $user = $user->search($request->query('search'), null, true, true);
+        }
+        return UserProfileResource::collection($user->paginate($request->query("limit") ?? 10));
     }
+
     public function store(UserRequest $request): UserProfileResource
     {
         $user = $this->userRepository->createAccountProfile($request->validated());
